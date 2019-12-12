@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    service: playground
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      service: playground
+  template:
+    metadata:
+      labels:
+        service: playground
+    spec:
+      containers:
+      - name: uconf-services-playground
+        image: {{ .Values.image }}
+        ports:
+        - containerPort: 80

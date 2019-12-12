@@ -1,0 +1,22 @@
+apiVersion: skaffold/v1
+kind: Config
+metadata:
+  name: uconf
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: uconf.azurecr.io/services/playground
+    context: services\uConf.Services.Playground
+deploy:
+  helm:
+    releases:
+    - name: uconf-frontdoor
+      chartPath: stable/ambassador
+      remote: true
+      valuesFiles:
+        - values/ambassador.yml
+    - name: uconf-playground
+      chartPath: ./services/uConf.Services.Playground/chart
+      values:
+        image: uconf.azurecr.io/services/playground

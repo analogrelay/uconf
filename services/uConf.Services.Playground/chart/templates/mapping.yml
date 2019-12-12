@@ -1,0 +1,10 @@
+# Ambassador mapping
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: {{ .Release.Name }}-inbound
+spec:
+  prefix: /api/v1/services/playground/
+  service: {{ .Release.Name }}-service:80
+  add_request_headers:
+      x-forwarded-pathbase: /api/v1/services/playground/
